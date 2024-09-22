@@ -1,11 +1,11 @@
-import { SIZE } from "./env.js";
+import { MAX, SIZE } from "./env.js";
 
 export class Draw {
   constructor() {
     this.container = document.createElement("div");
     this.container.style.display = "flex";
     this.container.style.flexWrap = "wrap";
-    this.container.style.maxWidth = "220px";
+    this.container.style.maxWidth = SIZE * 50 + "px";
     this.body = document.body;
   }
 
@@ -21,6 +21,10 @@ export class Draw {
   }
 
   drawTile(tile) {
+    if (tile.value === MAX) {
+      this.victory();
+      return;
+    }
     const tileElement = document.createElement("div");
     tileElement.style.width = "50px";
     tileElement.style.height = "50px";
@@ -28,7 +32,37 @@ export class Draw {
     tileElement.style.border = "solid 1px black";
     tileElement.style.padding = " 5px";
     if (tile) {
-      tileElement.style.background = "yellow";
+      switch (tile.value) {
+        case 2: {
+          tileElement.style.background = "yellow";
+          break;
+        }
+        case 4: {
+          tileElement.style.background = "orange";
+          break;
+        }
+        case 8: {
+          tileElement.style.background = "green";
+          break;
+        }
+        case 16: {
+          tileElement.style.background = "blue";
+          break;
+        }
+        case 32: {
+          tileElement.style.background = "red";
+          break;
+        }
+        case 64: {
+          tileElement.style.background = "pink";
+          break;
+        }
+        default: {
+          tileElement.style.background = "grey";
+          break;
+        }
+      }
+
       tileElement.innerText = tile.value;
       tileElement.style.textAlign = "center";
       tileElement.style.verticalAlign = "middle";
@@ -45,5 +79,13 @@ export class Draw {
   drawField(grid) {
     this.clearField();
     this.drawInit(grid);
+  }
+
+  victory() {
+    window.alert("Win!");
+  }
+
+  gameOver() {
+    window.alert("Game over!");
   }
 }

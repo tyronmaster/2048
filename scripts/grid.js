@@ -13,6 +13,17 @@ export class Grid {
     return matrix;
   }
 
+  actuate() {
+    for (let x = 0; x < this.size; x++) {
+      for (let y = 0; y < this.size; y++) {
+        if (this.matrix[x][y] !== null) {
+          this.matrix[x][y].x = x;
+          this.matrix[x][y].y = y;
+        }
+      }
+    }
+  }
+
   availableRandomPosition() {
     const availablePositions = this.availablePositions();
     if (availablePositions.length)
