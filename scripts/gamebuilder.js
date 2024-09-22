@@ -1,6 +1,7 @@
 import { Draw } from "./draw.js";
 import { MAX, SIZE } from "./env.js";
 import { Grid } from "./grid.js";
+import { EventsInterceptor } from "./interceptor.js";
 import { Tile } from "./tile.js";
 import { Utils } from "./utils.js";
 
@@ -63,7 +64,7 @@ export class GameBuilder {
   listener() {
     document.body.addEventListener("keydown", (e) => {
       e.preventDefault();
-      console.log(e.key);
+      // console.log(e.key);
       if (e.key === "ArrowLeft") {
         this.move({ x: 1, y: 0 });
       }
@@ -76,6 +77,40 @@ export class GameBuilder {
       if (e.key === "ArrowDown") {
         this.move({ x: 0, y: -1 });
       }
+    });
+
+    let touchStartX, touchstartY;
+    const container = document.querySelector(".container");
+    document.body.addEventListener("touchstart", (e) => {
+      if (e.touches.length > 1) return;
+      ({ pointX: touchStartX, pointY: touchstartY } = EventsInterceptor.pointXY(
+        container,
+        e
+      ));
+      // e.preventDefault();
+    });
+    // document.body.addEventListener("touchmove", (e) => e.preventDefault());
+    document.body.addEventListener("touchend", (e) => {
+      let { pointX: touchEndX, pointY: touchEndY } = EventsInterceptor.pointXY(
+        container,
+        e
+      );
+      let directionX = touchEndX - touchStartX;
+      let directionY = touchEndY - touchstartY;
+      let absX = Math.abs(directionX);
+      let absY = Math.abs(directionY);
+      if (Math.max(absX, absY) > 5) {
+        this.move(
+          absX > absY
+            ? directionX > 0
+              ? { x: 1, y: 0 }
+              : { x: -1, y: 0 }
+            : directionY > 0
+            ? { x: 0, y: 1 }
+            : { x: 0, y: -1 }
+        );
+      }
+      console.log({ directionX, directionY });
     });
   }
 

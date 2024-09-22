@@ -3,6 +3,7 @@ import { MAX, SIZE } from "./env.js";
 export class Draw {
   constructor() {
     this.container = document.createElement("div");
+    this.container.classList.add("container");
     this.container.style.display = "flex";
     this.container.style.flexWrap = "wrap";
     this.container.style.maxWidth = SIZE * 50 + "px";
