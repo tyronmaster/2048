@@ -21,7 +21,7 @@ export class Draw {
   }
 
   drawTile(tile) {
-    if (tile.value === MAX) {
+    if (tile && tile.value === MAX) {
       this.victory();
       return;
     }
