@@ -22,10 +22,6 @@ export class Draw {
   }
 
   drawTile(tile) {
-    if (tile && tile.value === MAX) {
-      this.victory();
-      return;
-    }
     const tileElement = document.createElement("div");
     tileElement.style.width = "50px";
     tileElement.style.height = "50px";
@@ -67,6 +63,10 @@ export class Draw {
       tileElement.innerText = tile.value;
       tileElement.style.textAlign = "center";
       tileElement.style.verticalAlign = "middle";
+    }
+    if (tile && tile.value === MAX) {
+      this.victory();
+      // return;
     }
     return tileElement;
   }

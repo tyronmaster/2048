@@ -3,7 +3,6 @@ import { MAX, SIZE } from "./env.js";
 import { Grid } from "./grid.js";
 import { EventsInterceptor } from "./interceptor.js";
 import { Tile } from "./tile.js";
-import { Utils } from "./utils.js";
 
 export class GameBuilder {
   constructor(size = SIZE) {

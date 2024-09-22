@@ -12,8 +12,6 @@ export class EventsInterceptor {
           ? event.touches[0].clientY
           : event.changedTouches[0].clientY)
     );
-    // console.log(event);
-    // console.log({ pointX, pointY });
     return { pointX, pointY };
   }
 }
