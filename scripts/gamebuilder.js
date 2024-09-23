@@ -1,5 +1,5 @@
 import { Draw } from "./draw.js";
-import { SIZE } from "./env.js";
+import { MAX_VALUE, SIZE } from "./env.js";
 import { Grid } from "./grid.js";
 import { EventsInterceptor } from "./interceptor.js";
 import { Tile } from "./tile.js";
@@ -14,14 +14,18 @@ export class GameBuilder {
   start() {
     this.grid = new Grid(this.size);
     this.score = 0;
-    this.gameOver = false;
-    this.gameWon = false;
 
     this.addFirstTile();
     this.draw = new Draw();
     this.draw.drawInit(this.grid.matrix);
-
+    this.draw.drawScore(this.score);
     this.listener();
+  }
+
+  restart() {
+    this.grid = null;
+    this.draw = null;
+    this.start();
   }
 
   addFirstTile() {
@@ -36,6 +40,7 @@ export class GameBuilder {
       this.grid.insertTile(tile);
     } else {
       this.draw.gameOver();
+      this.restart();
     }
   }
 
@@ -78,15 +83,15 @@ export class GameBuilder {
 
     let touchStartX, touchstartY;
     const container = document.querySelector(".container");
-    document.body.addEventListener("touchstart", (e) => {
+    container.addEventListener("touchstart", (e) => {
       if (e.touches.length > 1) return;
       ({ pointX: touchStartX, pointY: touchstartY } = EventsInterceptor.pointXY(
         container,
         e
       ));
+      e.preventDefault();
     });
-
-    document.body.addEventListener("touchend", (e) => {
+    container.addEventListener("touchend", (e) => {
       let { pointX: touchEndX, pointY: touchEndY } = EventsInterceptor.pointXY(
         container,
         e
@@ -106,7 +111,7 @@ export class GameBuilder {
             : { x: 0, y: -1 }
         );
       }
-      // console.log({ directionX, directionY });
+      e.preventDefault();
     });
   }
 
@@ -124,6 +129,14 @@ export class GameBuilder {
           const newValue = row[y].value * 2;
           row[y].value = newValue;
           row[y + 1] = null;
+
+          if (newValue === MAX_VALUE) {
+            this.draw.victory();
+            this.restart();
+          }
+
+          this.score += newValue;
+          this.draw.drawScore(this.score);
         }
       }
       row = row.filter((el) => el !== null);
