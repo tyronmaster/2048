@@ -1,5 +1,5 @@
 import { Draw } from "./draw.js";
-import { MAX, SIZE } from "./env.js";
+import { SIZE } from "./env.js";
 import { Grid } from "./grid.js";
 import { EventsInterceptor } from "./interceptor.js";
 import { Tile } from "./tile.js";
@@ -13,7 +13,6 @@ export class GameBuilder {
 
   start() {
     this.grid = new Grid(this.size);
-    // console.log(this.grid.matrix);
     this.score = 0;
     this.gameOver = false;
     this.gameWon = false;
@@ -63,7 +62,6 @@ export class GameBuilder {
   listener() {
     document.body.addEventListener("keydown", (e) => {
       e.preventDefault();
-      // console.log(e.key);
       if (e.key === "ArrowLeft") {
         this.move({ x: 1, y: 0 });
       }
@@ -86,9 +84,8 @@ export class GameBuilder {
         container,
         e
       ));
-      // e.preventDefault();
     });
-    // document.body.addEventListener("touchmove", (e) => e.preventDefault());
+
     document.body.addEventListener("touchend", (e) => {
       let { pointX: touchEndX, pointY: touchEndY } = EventsInterceptor.pointXY(
         container,

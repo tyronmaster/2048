@@ -1,4 +1,4 @@
-import { MAX, SIZE } from "./env.js";
+import { MAX_VALUE, SIZE } from "./env.js";
 
 export class Draw {
   constructor() {
@@ -64,9 +64,8 @@ export class Draw {
       tileElement.style.textAlign = "center";
       tileElement.style.verticalAlign = "middle";
     }
-    if (tile && tile.value === MAX) {
+    if (tile && tile.value === MAX_VALUE) {
       this.victory();
-      // return;
     }
     return tileElement;
   }
