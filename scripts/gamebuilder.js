@@ -106,7 +106,7 @@ export class GameBuilder {
             : { x: 0, y: -1 }
         );
       }
-      console.log({ directionX, directionY });
+      // console.log({ directionX, directionY });
     });
   }
 
