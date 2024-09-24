@@ -1,8 +1,6 @@
-import { SIZE } from "./env.js";
-
 export class Grid {
   constructor(size) {
-    this.size = SIZE;
+    this.size = size;
     this.matrix = this.emptyMatrix();
   }
 
